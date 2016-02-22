@@ -75,8 +75,9 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Helpers\BorderedConsole.cs" />
+    <Compile Include="Consoles\BorderedConsole.cs" />
     <Compile Include="Helpers\CSharpScriptEngine.cs" />
+    <Compile Include="Helpers\RagnaRogueColors.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="RagnaRogueGame.cs" />
   </ItemGroup>

@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using RagnaRogue.Consoles;
 
 namespace RagnaRogue
 {
@@ -30,12 +31,14 @@ namespace RagnaRogue
                 SadConsole.Engine.UseMouse = true;
                 SadConsole.Engine.UseKeyboard = true;
 
-                var sampleConsole = new SadConsole.Consoles.Console(width, height);
+                //var sampleConsole = new SadConsole.Consoles.Console(width, height);
 
-                sampleConsole.FillWithRandomGarbage(true);
+                //sampleConsole.FillWithRandomGarbage(true);
 
-                SadConsole.Engine.ConsoleRenderStack.Add(sampleConsole);
-                SadConsole.Engine.ActiveConsole = sampleConsole;
+                var mainConsole = new BorderedConsole(width, height, " Ragnarogue: v0.1 aka 'Yay RL' ");
+
+                SadConsole.Engine.ConsoleRenderStack.Add(mainConsole);
+                SadConsole.Engine.ActiveConsole = mainConsole;
             });
 
             Components.Add(sadConsoleComponent);
