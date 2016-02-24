@@ -2,4 +2,33 @@
 
 var reg = Global as RegistryDatabase;
 
+// default scripts
 reg.RegisterCreature("Scripts/Creatures/prefab");
+
+// lvl  1 creatures
+reg.RegisterCreature("Scripts/Creatures/1_kobold");
+
+// lvl  2 creatures
+// lvl  3 creatures
+// lvl  4 creatures
+// lvl  5 creatures
+// lvl  6 creatures
+// lvl  7 creatures
+// lvl  8 creatures
+// lvl  9 creatures
+// lvl 10 creatures
+// lvl 11 creatures
+// lvl 12 creatures
+// lvl 13 creatures
+// lvl 14 creatures
+// lvl 15 creatures
+// lvl 16 creatures
+// lvl 17 creatures
+// lvl 18 creatures
+// lvl 19 creatures
+// lvl 20 creatures
+// lvl 21 creatures
+// lvl 22 creatures
+// lvl 23 creatures
+// lvl 24 creatures
+// lvl 25 creatures

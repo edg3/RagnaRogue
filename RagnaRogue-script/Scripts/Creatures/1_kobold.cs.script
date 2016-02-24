@@ -1,0 +1,38 @@
+﻿using RagnaRogue.Mechanics;
+
+var c = Global as Creature;
+
+c.SetName("Kobold");
+
+// lvl, str, dex, vit, agi, int, hp
+c.SetStats(1,7,15,9,8,7,5);
+c.SetSpeed(5);
+c.SetArmorClass(12);
+
+// Alliance type
+c.AddAlliance(Race.Kobold);
+
+// Senses
+c.AddSense(Sense.DarkVision, 10);
+c.AddSense(Sense.Passive, 8);
+
+// Languages
+c.AddLanguage(Language.Common);
+c.AddLanguage(Language.Draconic);
+
+// EXP yield
+c.SetChallenge(25);
+
+// Special rules
+//c.AddRuleWhen(Rule.InSunlight, Buff.AttackDisadvantage);
+//c.AddRuleWhen(Rule.AlliesDirectAdjacent, Buff.AttackDisadvantage);
+
+// Actions
+//c.AddAction(Action.MeleeWeaponAttack);
+//c.AddAction(Action.RangedWeaponAttack);
+
+//c.ActionStrategy(Strategy.Default);
+
+// Equipment
+//c.GiveWeapon("Dagger", Modifiers.None);
+//c.GiveWeapon("Sling", Modifiers.None);
