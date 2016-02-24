@@ -19,7 +19,7 @@ namespace RagnaRogue.Consoles
             box.Height = height;
             box.Draw(CellData);
 
-            CellData.Print(3, 0, new ColoredString(title, new CellAppearance(RagnaRogueColors.UILightBlue, Color.Black)));
+            CellData.Print(3, 0, new ColoredString(title, new CellAppearance(Color.White, Color.Black)));
         }
     }
 }

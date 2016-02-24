@@ -1,0 +1,8 @@
+﻿using RagnaRogue.Mechanics;
+
+var c = Global as Creature;
+
+// Prefab is just a placeholder, used for testing
+
+c.SetName("Prefab");
+c.SetStats(1,10,10,10,10,10);

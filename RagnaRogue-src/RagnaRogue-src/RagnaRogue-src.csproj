@@ -38,6 +38,7 @@
   </PropertyGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="Documents\1.Creature.lel" />
     <None Include="Fonts\Cheepicus12.font">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -67,6 +68,7 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Documents\About.html" />
     <Content Include="Fonts\Cheepicus_12x12.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -78,10 +80,23 @@
     <Compile Include="Consoles\BorderedConsole.cs" />
     <Compile Include="Helpers\CSharpScriptEngine.cs" />
     <Compile Include="Helpers\RagnaRogueColors.cs" />
+    <Compile Include="Helpers\ScriptEngineHelper.cs" />
+    <Compile Include="Mechanics\Component.cs" />
+    <Compile Include="Mechanics\Creature.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="RagnaRogueGame.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\RagnaRogue-script\RagnaRogue-script.csproj">
+      <Project>{a227d1eb-efdf-4316-83e9-2873b700508a}</Project>
+      <Name>RagnaRogue-script</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>xcopy "$(SolutionDir)..\RagnaRogue-script\bin\Debug\" "$(TargetDir)" /c /d /e /h /i /k /q /r /s /x /y
+xcopy "$(SolutionDir)..\req\" "$(TargetDir)" /c /d /e /h /i /k /q /r /s /x /y</PostBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

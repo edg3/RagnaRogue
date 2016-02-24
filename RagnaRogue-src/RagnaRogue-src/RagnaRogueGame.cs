@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using RagnaRogue.Consoles;
+using SadConsole.Consoles;
 
 namespace RagnaRogue
 {
@@ -36,6 +37,8 @@ namespace RagnaRogue
                 //sampleConsole.FillWithRandomGarbage(true);
 
                 var mainConsole = new BorderedConsole(width, height, " Ragnarogue: v0.1 aka 'Yay RL' ");
+
+                //mainConsole.CellSize = new Point((int)(SadConsole.Engine.DefaultFont.CellWidth / 1.2), (int)(SadConsole.Engine.DefaultFont.CellHeight / 1.2));
 
                 SadConsole.Engine.ConsoleRenderStack.Add(mainConsole);
                 SadConsole.Engine.ActiveConsole = mainConsole;
