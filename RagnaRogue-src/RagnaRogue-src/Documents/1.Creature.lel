@@ -1,3 +1,0 @@
-﻿<h3>Creation</h3>
-
-"using RagnaRogue.Mechanics; (Global as Creature).SetStats(1,10,10,10,10,10);"
