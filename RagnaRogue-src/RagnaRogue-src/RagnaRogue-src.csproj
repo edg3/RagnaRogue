@@ -83,6 +83,7 @@
     <Compile Include="Helpers\ScriptEngineHelper.cs" />
     <Compile Include="Mechanics\Component.cs" />
     <Compile Include="Mechanics\Creature.cs" />
+    <Compile Include="Mechanics\Database\RegistryDatabase.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="RagnaRogueGame.cs" />
   </ItemGroup>
@@ -92,6 +93,7 @@
       <Name>RagnaRogue-script</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>xcopy "$(SolutionDir)..\RagnaRogue-script\bin\Debug\" "$(TargetDir)" /c /d /e /h /i /k /q /r /s /x /y

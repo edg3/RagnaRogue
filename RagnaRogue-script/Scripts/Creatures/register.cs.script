@@ -1,0 +1,5 @@
+﻿using RagnaRogue.Mechanics.Database;
+
+var reg = Global as RegistryDatabase;
+
+reg.RegisterCreature("Scripts/Creatures/prefab");

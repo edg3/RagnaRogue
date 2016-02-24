@@ -45,5 +45,18 @@ namespace RagnaRogue.Helpers
                 return result.Variables["Global"].Value as Creature;
             }
         }
+
+        /// <summary>
+        /// Run a specific file with an object argument
+        /// </summary>
+        /// <param name="fileName">The file to run without ".cs.script"</param>
+        /// <param name="_obj">The object to pass into "Global"</param>
+        public static void RunFile(string fileName, object _obj)
+        {
+            using (var fs = new StreamReader(fileName + ".cs.script"))
+            {
+                var result = CSharpScriptEngine.Execute(fs.ReadToEnd(), _obj);
+            }
+        }
     }
 }

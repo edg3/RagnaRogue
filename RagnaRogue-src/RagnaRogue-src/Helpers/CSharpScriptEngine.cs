@@ -15,6 +15,7 @@ namespace RagnaRogue.Helpers
             namespaces.Add("RagnaRogue");
             namespaces.Add("RagnaRogue.Helpers");
             namespaces.Add("RagnaRogue.Mechanics");
+            namespaces.Add("RagnaRogue.Mechanics.Database");
 
             ScriptSystemOptions = ScriptOptions.Default;
             ScriptSystemOptions.AddNamespaces(namespaces);
