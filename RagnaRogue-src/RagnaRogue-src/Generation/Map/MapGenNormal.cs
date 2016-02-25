@@ -20,6 +20,8 @@ namespace RagnaRogue.Generation.Map
             return (int)Math.Sqrt(Math.Pow(a.X - b.X, 2) + Math.Pow(a.Y - b.Y, 2));
         }
 
+        const int point_max = 18;
+
         public CellData[,] Generate(int seed)
         {
             int wide = 100 + Dice.Roll(5, 20); //55 -> 100
@@ -29,7 +31,10 @@ namespace RagnaRogue.Generation.Map
             //Base Simplistic Map Gen
             List<Point> initial = new List<Point>();
 
-            int points = wide * high / 250;
+            int points = (int)Math.Max(Math.Min(120, (wide * high) / 250), 30);
+
+            System.Console.WriteLine("Map points: " + points.ToString());
+
             for (int i = 0; i < points; i++)
                 initial.Add(new Point(Dice.Next(wide), Dice.Next(high)));
 
@@ -40,10 +45,13 @@ namespace RagnaRogue.Generation.Map
                                 select item).ToList();
 
             List<Point> final_points = new List<Point>();
+            int limit = 0;
             foreach (var dense_point in dense_points)
             {
-                int size = Dice.Roll(3, 6);
+                limit++;
+                int size = 7 + Dice.Roll(4, 6);
                 Point p = new Point(dense_point.X, dense_point.Y);
+                int roll = Dice.Roll(1, 2);
                 for (int i = -size/2; i < size/2; i++)
                 {
                     for (int j = -size/2; j < size/2; j++)
@@ -51,46 +59,81 @@ namespace RagnaRogue.Generation.Map
                         Point check_point = new Point(p.X + i, p.Y + j);
                         if ((check_point.X < 0) || (check_point.X > wide - 1) || (check_point.Y < 0) || (check_point.Y > high - 1)) continue;
 
-                        if (euclid_distance(check_point, p) < size/2)
+                        if (roll == 1)
+                        {
+                            if (euclid_distance(check_point, p) < size / 2)
+                            {
+                                final_points.Add(check_point);
+                            }
+                        }
+                        else
                         {
                             final_points.Add(check_point);
                         }
                     }
                 }
+
+                if (limit == point_max) break;
             }
 
-            for (int i = 0; i < dense_points.Count -1; i++)
+            for (int i = 0; i < Math.Min(dense_points.Count, point_max) - 1; i++)
             {
                 Point a = dense_points[i];
                 Point b = dense_points[i + 1];
 
-                int dist = manhattan_distance(a, b);
-                Vector2 c = new Vector2(a.X, a.Y);
-                Vector2 unit = new Vector2(b.X - a.X, b.Y - a.Y);
-                unit.Normalize();
+                Point dist = new Point(1, 0);
 
-                for (int q = 0; q < dist; q++)
+                //Walk from a to b
+                while (dist.X != 0 || dist.Y != 0)
                 {
-                    float d = 1 / (float)q;
-                    c += unit;
+                    dist = a - b;
+                
+                    Point[] toSort = new Point[4];
+                    toSort[0] = new Point(0, -1);
+                    toSort[1] = new Point(0, 1);
+                    toSort[2] = new Point(-1, 0);
+                    toSort[3] = new Point(1, 0);
 
-                    Point c_p = new Point((int)c.X, (int)c.Y);
+                    //Cheeky shuffle to simulate a minor random choice, should make the walk less linear / makes multiple things show manhattan distance
+                    for (int z = 0; z < 6; z++)
+                    {
+                        int pza = Dice.Next(3) + 1;
+                        var temp = toSort[pza];
+                        toSort[pza] = toSort[0];
+                        toSort[0] = temp;
+                    }
 
-                    int size = 2 + Dice.Roll(2, 2);
+                    for (int outer = 0; outer < 3; outer++)
+                    {
+                        for (int inner = outer + 1; inner < 4; inner++)
+                        {
+                            if (manhattan_distance(toSort[outer] + a, b) > manhattan_distance(toSort[inner] + a, b))
+                            {
+                                var temp = toSort[outer];
+                                toSort[outer] = toSort[inner];
+                                toSort[inner] = temp;
+                            }
+                        }
+                    }
+
+                    a = a + toSort[0];
+
+                    int size = 2 + Dice.Roll(1, 5);
                     for (int k = -size / 2; k < size / 2; k++)
                     {
                         for (int j = -size / 2; j < size / 2; j++)
                         {
-                            Point check_point = new Point((int)(c.X) + k, (int)(c.Y) + j);
+                            Point check_point = new Point((int)(a.X) + k, (int)(a.Y) + j);
                             if ((check_point.X < 0) || (check_point.X > wide - 1) || (check_point.Y < 0) || (check_point.Y > high - 1)) continue;
-
-                            if (euclid_distance(check_point, c_p) < size / 2)
+                    
+                            if (euclid_distance(check_point, a) < size / 2)
                             {
                                 final_points.Add(check_point);
                             }
                         }
                     }
                 }
+
             }
 
             //End Base Simplistic Map Gen

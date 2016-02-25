@@ -52,7 +52,10 @@ namespace RagnaRogue.Consoles
         {
             if (null == _map)
             {
+                var stime = DateTime.Now;
                 _map = (new MapGenNormal()).Generate(0);
+                var etime = DateTime.Now;
+                System.Console.WriteLine("Map gen took " + (etime - stime).TotalSeconds.ToString() + " seconds");
             }
         }
 
