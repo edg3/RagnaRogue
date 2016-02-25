@@ -76,7 +76,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Consoles\BorderedConsole.cs" />
+    <Compile Include="Consoles\MapView.cs" />
+    <Compile Include="Generation\Map\IGenerateMaps.cs" />
+    <Compile Include="Generation\Map\MapGenNormal.cs" />
     <Compile Include="Helpers\CSharpScriptEngine.cs" />
+    <Compile Include="Helpers\Dice.cs" />
     <Compile Include="Helpers\RagnaRogueColors.cs" />
     <Compile Include="Helpers\ScriptEngineHelper.cs" />
     <Compile Include="Mechanics\Component.cs" />

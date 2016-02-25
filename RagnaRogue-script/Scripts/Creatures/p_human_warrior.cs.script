@@ -1,0 +1,29 @@
+﻿using RagnaRogue.Mechanics;
+
+var c = Global as Creature;
+
+c.SetName("Human Warrior");
+
+// lvl, str, dex, vit, agi, int, hp
+c.SetStats(1,14,15,14,10,10,12);
+c.SetSpeed(5);
+c.SetArmorClass(12);
+
+// Alliance type
+c.AddAlliance(Race.Human);
+
+// Senses
+c.AddSense(Sense.Passive, 12);
+
+// Languages
+c.AddLanguage(Language.Common);
+
+// Actions
+//c.AddAction(Action.MeleeWeaponAttack);
+//c.AddAction(Action.RangedWeaponAttack);
+
+//c.ActionStrategy(Strategy.Default);
+
+// Equipment
+//c.GiveWeapon("Dagger", Modifiers.None);
+//c.GiveWeapon("Sling", Modifiers.None);

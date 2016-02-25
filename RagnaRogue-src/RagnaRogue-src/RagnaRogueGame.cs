@@ -38,10 +38,14 @@ namespace RagnaRogue
 
                 var mainConsole = new BorderedConsole(width, height, " Ragnarogue: v0.1 aka 'Yay RL' ");
 
+                var mapConsole = new MapView(width - 43, height - 10);
+
                 //mainConsole.CellSize = new Point((int)(SadConsole.Engine.DefaultFont.CellWidth / 1.2), (int)(SadConsole.Engine.DefaultFont.CellHeight / 1.2));
 
                 SadConsole.Engine.ConsoleRenderStack.Add(mainConsole);
-                SadConsole.Engine.ActiveConsole = mainConsole;
+                SadConsole.Engine.ConsoleRenderStack.Add(mapConsole);
+                //SadConsole.Engine.ActiveConsole = mainConsole;
+                SadConsole.Engine.ActiveConsole = mapConsole;
             });
 
             Components.Add(sadConsoleComponent);

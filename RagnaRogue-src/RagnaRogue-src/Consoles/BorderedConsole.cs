@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace RagnaRogue.Consoles
 {
-    class BorderedConsole : SadConsole.Consoles.Console
+    public class BorderedConsole : SadConsole.Consoles.Console
     {
         public BorderedConsole(int width, int height, string title) : base(width, height)
         {
