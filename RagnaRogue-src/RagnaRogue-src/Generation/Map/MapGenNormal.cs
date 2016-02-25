@@ -22,8 +22,8 @@ namespace RagnaRogue.Generation.Map
 
         public CellData[,] Generate(int seed)
         {
-            int wide = 50 + Dice.Roll(5, 10); //55 -> 100
-            int high = 50 + Dice.Roll(5, 10); // 55 -> 100
+            int wide = 100 + Dice.Roll(5, 20); //55 -> 100
+            int high = 100 + Dice.Roll(5, 20); // 55 -> 100
             CellData[,] cdata = new CellData[wide, high];
 
             //Base Simplistic Map Gen
@@ -51,9 +51,43 @@ namespace RagnaRogue.Generation.Map
                         Point check_point = new Point(p.X + i, p.Y + j);
                         if ((check_point.X < 0) || (check_point.X > wide - 1) || (check_point.Y < 0) || (check_point.Y > high - 1)) continue;
 
-                        if (euclid_distance(check_point, p) < size)
+                        if (euclid_distance(check_point, p) < size/2)
                         {
                             final_points.Add(check_point);
+                        }
+                    }
+                }
+            }
+
+            for (int i = 0; i < dense_points.Count -1; i++)
+            {
+                Point a = dense_points[i];
+                Point b = dense_points[i + 1];
+
+                int dist = manhattan_distance(a, b);
+                Vector2 c = new Vector2(a.X, a.Y);
+                Vector2 unit = new Vector2(b.X - a.X, b.Y - a.Y);
+                unit.Normalize();
+
+                for (int q = 0; q < dist; q++)
+                {
+                    float d = 1 / (float)q;
+                    c += unit;
+
+                    Point c_p = new Point((int)c.X, (int)c.Y);
+
+                    int size = 2 + Dice.Roll(2, 2);
+                    for (int k = -size / 2; k < size / 2; k++)
+                    {
+                        for (int j = -size / 2; j < size / 2; j++)
+                        {
+                            Point check_point = new Point((int)(c.X) + k, (int)(c.Y) + j);
+                            if ((check_point.X < 0) || (check_point.X > wide - 1) || (check_point.Y < 0) || (check_point.Y > high - 1)) continue;
+
+                            if (euclid_distance(check_point, c_p) < size / 2)
+                            {
+                                final_points.Add(check_point);
+                            }
                         }
                     }
                 }
