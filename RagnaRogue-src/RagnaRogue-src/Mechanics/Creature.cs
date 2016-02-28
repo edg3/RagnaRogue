@@ -96,7 +96,7 @@ namespace RagnaRogue.Mechanics
 
         public void AddSense(Sense _toAdd, int val)
         {
-                Senses.Add(_toAdd, val);
+            Senses.Add(_toAdd, val);
         }
 
         public void AddLanguage(Language _toAdd)
