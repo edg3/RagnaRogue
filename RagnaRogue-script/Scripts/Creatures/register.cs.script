@@ -5,6 +5,8 @@ var reg = Global as RegistryDatabase;
 // default scripts
 reg.RegisterCreature("Scripts/Creatures/prefab");
 
+reg.RegisterCreature("Scripts/Creatures/p_human_warrior");
+
 // lvl  1 creatures
 reg.RegisterCreature("Scripts/Creatures/1_kobold");
 

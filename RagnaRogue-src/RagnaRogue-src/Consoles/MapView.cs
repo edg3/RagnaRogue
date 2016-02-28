@@ -8,6 +8,7 @@ using SadConsole.Input;
 using Microsoft.Xna.Framework;
 using RagnaRogue.Mechanics;
 using RagnaRogue.Helpers;
+using RagnaRogue.Mechanics.Database;
 
 namespace RagnaRogue.Consoles
 {
@@ -25,6 +26,7 @@ namespace RagnaRogue.Consoles
         int height;
 
         CellData[,] _map = null;
+        List<Point> points;
 
         public MapView(int width, int height) : base(width, height, "World")
         {
@@ -41,6 +43,18 @@ namespace RagnaRogue.Consoles
             CanUseKeyboard = true;
             CanUseMouse = true;
 
+            points = new List<Point>();
+            for (int i = 0; i < width; i++)
+            {
+                for (int j = 0; j < height; j++)
+                {
+                    if (_map[i, j].BackColor != Color.Black)
+                    {
+                        points.Add(new Point(i, j));
+                    }
+                }
+            }
+
             _player = new PlayerEntity();
 
             int _x = Dice.Next(width);
@@ -48,8 +62,8 @@ namespace RagnaRogue.Consoles
 
             while (_map[_x, _y].BackColor == Color.Black)
             {
-                _x = (_x + 1) % width;
-                _y = (_y + 1) % height;
+                _x = Dice.Next(width);
+                _y = Dice.Next(height);
             }
 
             _map[_x, _y].Contains = _player;
@@ -59,7 +73,26 @@ namespace RagnaRogue.Consoles
             X = _player.X;
             Y = _player.Y;
 
+            GenerateEncounters();
+
             GenerateRender();
+        }
+
+        private void GenerateEncounters()
+        {
+            for (int i = 0; i < 50; i++)
+            {
+                int _x = Dice.Next(width);
+                int _y = Dice.Next(height);
+
+                while ((_map[_x, _y].BackColor == Color.Black) || (null != _map[_x, _y].Contains))
+                {
+                    _x = Dice.Next(width);
+                    _y = Dice.Next(height);
+                }
+
+                _map[_x, _y].Contains = new Entity("k", Color.White).AddComponent(RegistryDatabase.Instance.CloneCreature("kobold"));
+            }
         }
 
         private void MakeMap()

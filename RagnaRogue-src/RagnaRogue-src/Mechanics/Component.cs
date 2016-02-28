@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace RagnaRogue.Mechanics
 {
+    [Serializable]
     public class Component
     {
         private string _name = "[Name me]";

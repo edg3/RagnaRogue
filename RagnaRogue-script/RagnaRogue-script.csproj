@@ -43,7 +43,9 @@
     <Content Include="Scripts\Creatures\1_kobold.cs.script">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <None Include="Scripts\Creatures\p_human_warrior.cs.script" />
+    <Content Include="Scripts\Creatures\p_human_warrior.cs.script">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />

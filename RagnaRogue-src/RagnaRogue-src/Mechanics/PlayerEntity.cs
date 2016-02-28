@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using RagnaRogue.Generation.Map;
 using SadConsole.Input;
+using RagnaRogue.Mechanics.Database;
 
 namespace RagnaRogue.Mechanics
 {
@@ -16,7 +17,7 @@ namespace RagnaRogue.Mechanics
 
         public PlayerEntity() : base("@", Color.White)
         {
-
+            AddComponent(RegistryDatabase.Instance.CloneCreature("p_human_warrior"));
         }
 
         public bool ProcessKeyboard(CellData[,] _map, int x, int y, KeyboardInfo info)
