@@ -33,7 +33,7 @@ namespace RagnaRogue.Helpers
         {
             __ScrGlobal _global = new __ScrGlobal();
             _global.Global = _opt;
-            var script = CSharpScript.Create(code, ScriptSystemOptions).WithPrevious(_previousInput);
+            var script = CSharpScript.Create(code, ScriptSystemOptions);//.WithPrevious(_previousInput);
             var endState = script.RunAsync(_global);
             _previousInput = endState.Script;
             return endState;
