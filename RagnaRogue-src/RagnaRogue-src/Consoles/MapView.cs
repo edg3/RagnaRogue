@@ -36,9 +36,6 @@ namespace RagnaRogue.Consoles
 
             MakeMap();
 
-            X = width / 2;
-            Y = height / 2;
-
             Position = new Microsoft.Xna.Framework.Point(1, 1);
 
             CanUseKeyboard = true;
@@ -58,6 +55,9 @@ namespace RagnaRogue.Consoles
             _map[_x, _y].Contains = _player;
             _player.X = _x;
             _player.Y = _y;
+
+            X = _player.X;
+            Y = _player.Y;
 
             GenerateRender();
         }
