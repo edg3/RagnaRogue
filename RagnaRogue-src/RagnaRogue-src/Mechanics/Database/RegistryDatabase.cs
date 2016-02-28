@@ -39,6 +39,19 @@ namespace RagnaRogue.Mechanics.Database
             CreatureData.Add(scriptLocation, reg);
         }
 
+        public Creature CloneCreature(string namePartial)
+        {
+            foreach (var key in CreatureData.Keys)
+            {
+                if (key.Contains(namePartial))
+                {
+                    return CreatureData[key].Cloneable.Clone();
+                }
+            }
+
+            return null;
+        }
+
         public override string ToString()
         {
             return "DBCount: " + CreatureData.Count;

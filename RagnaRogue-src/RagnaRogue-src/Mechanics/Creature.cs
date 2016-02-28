@@ -6,21 +6,22 @@ using System.Threading.Tasks;
 
 namespace RagnaRogue.Mechanics
 {
+    [Serializable]
     public class Creature : Component
     {
-        public int StStr { get; private set; }
-        public int StDex { get; private set; }
-        public int StVit { get; private set; }
-        public int StInt { get; private set; }
-        public int StAgi { get; private set; }
+        public int StStr { get; set; }
+        public int StDex { get; set; }
+        public int StVit { get; set; }
+        public int StInt { get; set; }
+        public int StAgi { get; set; }
 
-        public int AtHitPoints { get; private set; }
-        public int AtLevel { get; private set; }
+        public int AtHitPoints { get; set; }
+        public int AtLevel { get; set; }
 
-        public int Speed { get; private set; }
-        public int ArmorClass { get; private set; }
+        public int Speed { get; set; }
+        public int ArmorClass { get; set; }
 
-        public int Challenge { get; private set; }
+        public int Challenge { get; set; }
 
         private List<Race> _races = new List<Race>();
 
@@ -54,6 +55,11 @@ namespace RagnaRogue.Mechanics
             StAgi = _agi;
 
             FullHeal();
+        }
+
+        public Creature Clone()
+        {
+            return ObjectCopier.Clone<Creature>(this);
         }
 
         public void FullHeal()

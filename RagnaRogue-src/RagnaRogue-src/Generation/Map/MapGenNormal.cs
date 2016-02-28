@@ -12,7 +12,7 @@ namespace RagnaRogue.Generation.Map
     {
         private int manhattan_distance(Point a, Point b)
         {
-            return (int)Math.Abs(a.X - b.X) + (int)Math.Abs(a.Y - b.Y);
+            return Math.Abs(a.X - b.X) + Math.Abs(a.Y - b.Y);
         }
 
         private int euclid_distance(Point a, Point b)
@@ -22,7 +22,7 @@ namespace RagnaRogue.Generation.Map
 
         const int point_max = 18;
 
-        public CellData[,] Generate(int seed)
+        public ReturnedCellData Generate(int seed)
         {
             int wide = 100 + Dice.Roll(5, 20); //55 -> 100
             int high = 100 + Dice.Roll(5, 20); // 55 -> 100
@@ -31,7 +31,7 @@ namespace RagnaRogue.Generation.Map
             //Base Simplistic Map Gen
             List<Point> initial = new List<Point>();
 
-            int points = (int)Math.Max(Math.Min(120, (wide * high) / 250), 30);
+            int points = Math.Max(Math.Min(120, (wide * high) / 250), 30);
 
             System.Console.WriteLine("Map points: " + points.ToString());
 
@@ -155,14 +155,18 @@ namespace RagnaRogue.Generation.Map
                     if (search_count > 0)
                     {
                         cdata[i, j].BackColor = Color.Gray;
+                        cdata[i, j].Pathable = true;
                     }
                 }
             }
 
-            cdata[0, 0].W = wide;
-            cdata[0, 0].H = high;
+            ReturnedCellData adata = new ReturnedCellData();
+            adata.Data = cdata;
 
-            return cdata;
+            adata.W = wide;
+            adata.H = high;
+
+            return adata;
         }
     }
 }

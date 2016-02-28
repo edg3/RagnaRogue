@@ -81,12 +81,15 @@
     <Compile Include="Generation\Map\MapGenNormal.cs" />
     <Compile Include="Helpers\CSharpScriptEngine.cs" />
     <Compile Include="Helpers\Dice.cs" />
+    <Compile Include="Helpers\ObjectCopier.cs" />
     <Compile Include="Helpers\RagnaRogueColors.cs" />
     <Compile Include="Helpers\ScriptEngineHelper.cs" />
     <Compile Include="Mechanics\Component.cs" />
     <Compile Include="Mechanics\Creature.cs" />
     <Compile Include="Mechanics\Database\RegistryDatabase.cs" />
+    <Compile Include="Mechanics\Entity.cs" />
     <Compile Include="Mechanics\Languages.cs" />
+    <Compile Include="Mechanics\PlayerEntity.cs" />
     <Compile Include="Mechanics\Races.cs" />
     <Compile Include="Mechanics\Senses.cs" />
     <Compile Include="Program.cs" />

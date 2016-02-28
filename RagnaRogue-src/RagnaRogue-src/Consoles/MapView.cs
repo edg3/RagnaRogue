@@ -6,6 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 using SadConsole.Input;
 using Microsoft.Xna.Framework;
+using RagnaRogue.Mechanics;
+using RagnaRogue.Helpers;
 
 namespace RagnaRogue.Consoles
 {
@@ -34,18 +36,30 @@ namespace RagnaRogue.Consoles
 
             MakeMap();
 
-            X = _map[0, 0].W / 2;
-            Y = _map[0, 0].H / 2;
-
-            this.width = _map[0, 0].W;
-            this.height = _map[0, 0].H;
-
-            GenerateRender();
+            X = width / 2;
+            Y = height / 2;
 
             Position = new Microsoft.Xna.Framework.Point(1, 1);
 
             CanUseKeyboard = true;
             CanUseMouse = true;
+
+            _player = new PlayerEntity();
+
+            int _x = Dice.Next(width);
+            int _y = Dice.Next(height);
+
+            while (_map[_x, _y].BackColor == Color.Black)
+            {
+                _x = (_x + 1) % width;
+                _y = (_y + 1) % height;
+            }
+
+            _map[_x, _y].Contains = _player;
+            _player.X = _x;
+            _player.Y = _y;
+
+            GenerateRender();
         }
 
         private void MakeMap()
@@ -53,7 +67,10 @@ namespace RagnaRogue.Consoles
             if (null == _map)
             {
                 var stime = DateTime.Now;
-                _map = (new MapGenNormal()).Generate(0);
+                var newData = (new MapGenNormal()).Generate(0);
+                _map = newData.Data;
+                width = newData.W;
+                height = newData.H;
                 var etime = DateTime.Now;
                 System.Console.WriteLine("Map gen took " + (etime - stime).TotalSeconds.ToString() + " seconds");
             }
@@ -72,10 +89,20 @@ namespace RagnaRogue.Consoles
                     if ((x < 0) || (y < 0) || (x >= width) || (y >= height))
                     {
                         this.CellData[i + 1, j + 1].Background = Color.Black;
+                        this.CellData[i + 1, j + 1].CharacterIndex = ' ';
                         continue;
                     }
                     
                     this.CellData[i + 1, j + 1].Background = _map[x, y].BackColor;
+                    if (_map[x,y].Contains != null)
+                    {
+                        this.CellData[i + 1, j + 1].Foreground = _map[x, y].Contains.VisualColor;
+                        this.CellData[i + 1, j + 1].CharacterIndex = (int)_map[x, y].Contains.VisualCharacter[0];
+                    }
+                    else
+                    {
+                        this.CellData[i + 1, j + 1].CharacterIndex = ' ';
+                    }
                 }
             }
         }
@@ -84,21 +111,16 @@ namespace RagnaRogue.Consoles
         {
             int x = X;
             int y = Y;
-            if (info.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.W))
+
+            if (inputDelay < DateTime.Now)
             {
-                Y -= 1;
-            }
-            else if (info.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.S))
-            {
-                Y += 1;
-            }
-            else if (info.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.A))
-            {
-                X -= 1;
-            }
-            else if (info.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.D))
-            {
-                X += 1;
+                if (_player.ProcessKeyboard(_map, _player.X, _player.Y, info))
+                {
+                    _allTurn = true;
+
+                    X = _player.X; // - (drawable_width / 2);
+                    Y = _player.Y; // - (drawable_height / 2);
+                }
             }
 
             if ((x != X) || (y != Y))
@@ -107,6 +129,42 @@ namespace RagnaRogue.Consoles
             }
 
             return false; // base.ProcessKeyboard(info);
+        }
+
+        PlayerEntity _player;
+        private bool _allTurn = false;
+        DateTime inputDelay;
+        public override void Update()
+        {
+            if (_allTurn)
+            {
+                inputDelay = DateTime.Now + TimeSpan.FromMilliseconds(100);
+                // TODO: Should turns stay localized?
+                for (int i = 0; i < drawable_width; i++)
+                {
+                    for (int j = 0; j < drawable_height; j++)
+                    {
+                        int x = (X + i - drawable_width / 2);
+                        int y = (Y + j - drawable_height / 2);
+
+                        if ((x < 0) || (y < 0) || (x >= width) || (y >= height))
+                        {
+                            continue;
+                        }
+
+                        if (_map[x, y].Contains != null)
+                        {
+                            _map[x, y].Contains.Update(_map, x, y);
+                        }
+                    }
+                }
+
+                GenerateRender();
+
+                _allTurn = false;
+            }
+
+            base.Update();
         }
     }
 }

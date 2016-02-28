@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using RagnaRogue.Mechanics;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +14,13 @@ namespace RagnaRogue.Generation.Map
         public string Back;
         public Color ForeColor;
         public Color BackColor;
+        public bool Pathable;
+        public Entity Contains;
+    }
+
+    public struct ReturnedCellData
+    {
+        public CellData[,] Data;
         public int W;
         public int H;
     }
@@ -24,6 +32,6 @@ namespace RagnaRogue.Generation.Map
         /// </summary>
         /// <param name="seed">TODO: implement map seeds.</param>
         /// <returns></returns>
-        CellData[,] Generate(int seed);
+        ReturnedCellData Generate(int seed);
     }
 }
